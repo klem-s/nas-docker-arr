@@ -10,13 +10,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - proxy
+    ports:
+      - "3000:3000"
     restart: unless-stopped
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.homepage.rule=Host(`${DOMAIN}`)
-      - traefik.http.routers.homepage.entrypoints=websecure
-      - traefik.http.routers.homepage.tls.certresolver=letsencrypt
-      - traefik.http.services.homepage.loadbalancer.server.port=3000
 
   # ─────────────────────────────────────────
   #  NORDVPN – VPN pour qBittorrent
@@ -57,12 +53,6 @@ services:
       - ${CONFIG}/qbittorrent:/config
       - ${DOWNLOADS}:/downloads
     restart: unless-stopped
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.qbittorrent.rule=Host(`qbit.${DOMAIN}`)
-      - traefik.http.routers.qbittorrent.entrypoints=websecure
-      - traefik.http.routers.qbittorrent.tls.certresolver=letsencrypt
-      - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
 
   # ─────────────────────────────────────────
   #  PROWLARR – Indexeurs
@@ -78,13 +68,9 @@ services:
       - ${CONFIG}/prowlarr:/config
     networks:
       - proxy
+    ports:
+      - "9696:9696"
     restart: unless-stopped
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.prowlarr.rule=Host(`prowlarr.${DOMAIN}`)
-      - traefik.http.routers.prowlarr.entrypoints=websecure
-      - traefik.http.routers.prowlarr.tls.certresolver=letsencrypt
-      - traefik.http.services.prowlarr.loadbalancer.server.port=9696
 
   # ─────────────────────────────────────────
   #  SONARR – Séries
@@ -102,13 +88,9 @@ services:
       - ${DOWNLOADS}:/downloads
     networks:
       - proxy
+    ports:
+      - "8989:8989"
     restart: unless-stopped
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAIN}`)
-      - traefik.http.routers.sonarr.entrypoints=websecure
-      - traefik.http.routers.sonarr.tls.certresolver=letsencrypt
-      - traefik.http.services.sonarr.loadbalancer.server.port=8989
 
   # ─────────────────────────────────────────
   #  RADARR – Films
@@ -127,14 +109,8 @@ services:
     networks:
       - proxy
     ports:
-      - 7878:7878
+      - "7878:7878"
     restart: unless-stopped
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.radarr.rule=Host(`radarr.${DOMAIN}`)
-      - traefik.http.routers.radarr.entrypoints=websecure
-      - traefik.http.routers.radarr.tls.certresolver=letsencrypt
-      - traefik.http.services.radarr.loadbalancer.server.port=7878
 
   # ─────────────────────────────────────────
   #  LIDARR – Musique
@@ -152,17 +128,9 @@ services:
       - ${DOWNLOADS}:/downloads
     networks:
       - proxy
+    ports:
+      - "8686:8686"
     restart: unless-stopped
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.lidarr.rule=Host(`lidarr.${DOMAIN}`)
-      - traefik.http.routers.lidarr.entrypoints=websecure
-      - traefik.http.routers.lidarr.tls.certresolver=letsencrypt
-      - traefik.http.services.lidarr.loadbalancer.server.port=8686
-
-  # ─────────────────────────────────────────
-  #  READARR – Livres
-  # ─────────────────────────────────────────
 
   # ─────────────────────────────────────────
   #  BAZARR – Sous-titres
@@ -180,13 +148,9 @@ services:
       - ${MEDIA}/series:/tv
     networks:
       - proxy
+    ports:
+      - "6767:6767"
     restart: unless-stopped
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.bazarr.rule=Host(`bazarr.${DOMAIN}`)
-      - traefik.http.routers.bazarr.entrypoints=websecure
-      - traefik.http.routers.bazarr.tls.certresolver=letsencrypt
-      - traefik.http.services.bazarr.loadbalancer.server.port=6767
 
   # ─────────────────────────────────────────
   #  PLEX – Streaming
@@ -224,6 +188,8 @@ services:
       - ${MEDIA}/musique:/music
     networks:
       - proxy
+    ports:
+      - "8096:8096"
     restart: unless-stopped
     labels:
       - traefik.enable=true
@@ -246,6 +212,8 @@ services:
       - ${CONFIG}/seerr:/config
     networks:
       - proxy
+    ports:
+      - "5055:5055"
     restart: unless-stopped
     labels:
       - traefik.enable=true
@@ -268,13 +236,9 @@ services:
       - ${CONFIG}/tautulli:/config
     networks:
       - proxy
+    ports:
+      - "8181:8181"
     restart: unless-stopped
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.tautulli.rule=Host(`tautulli.${DOMAIN}`)
-      - traefik.http.routers.tautulli.entrypoints=websecure
-      - traefik.http.routers.tautulli.tls.certresolver=letsencrypt
-      - traefik.http.services.tautulli.loadbalancer.server.port=8181
 
   # ─────────────────────────────────────────
   #  JELLYSTAT – Stats Jellyfin
@@ -307,13 +271,33 @@ services:
       - jellystat-db
     networks:
       - proxy
+    ports:
+      - "3001:3000"
+    restart: unless-stopped
+
+  # ─────────────────────────────────────────
+  #  VAULTWARDEN – Password manager
+  # ─────────────────────────────────────────
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    environment:
+      - DOMAIN=https://ward.${DOMAIN}
+      - SIGNUPS_ALLOWED=false
+    volumes:
+      - ${CONFIG}/vaultwarden:/data
+    networks:
+      - proxy
+    ports:
+      - "8222:80"
     restart: unless-stopped
     labels:
       - traefik.enable=true
-      - traefik.http.routers.jellystat.rule=Host(`jellystat.${DOMAIN}`)
-      - traefik.http.routers.jellystat.entrypoints=websecure
-      - traefik.http.routers.jellystat.tls.certresolver=letsencrypt
-      - traefik.http.services.jellystat.loadbalancer.server.port=3000
+      - traefik.http.routers.vaultwarden.rule=Host(`ward.${DOMAIN}`)
+      - traefik.http.routers.vaultwarden.entrypoints=websecure
+      - traefik.http.routers.vaultwarden.tls.certresolver=letsencrypt
+      - traefik.http.services.vaultwarden.loadbalancer.server.port=80
+
 networks:
   proxy:
     external: true
