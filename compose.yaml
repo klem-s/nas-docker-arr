@@ -13,6 +13,11 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homepage-lan.rule=Host(`homepage.lan`)
+      - traefik.http.routers.homepage-lan.entrypoints=web
+      - traefik.http.services.homepage-lan.loadbalancer.server.port=3000
 
   # ─────────────────────────────────────────
   #  NORDVPN – VPN pour qBittorrent
@@ -71,6 +76,11 @@ services:
     ports:
       - "9696:9696"
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.prowlarr-lan.rule=Host(`prowlarr.lan`)
+      - traefik.http.routers.prowlarr-lan.entrypoints=web
+      - traefik.http.services.prowlarr-lan.loadbalancer.server.port=9696
 
   # ─────────────────────────────────────────
   #  SONARR – Séries
@@ -91,6 +101,11 @@ services:
     ports:
       - "8989:8989"
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sonarr-lan.rule=Host(`sonarr.lan`)
+      - traefik.http.routers.sonarr-lan.entrypoints=web
+      - traefik.http.services.sonarr-lan.loadbalancer.server.port=8989
 
   # ─────────────────────────────────────────
   #  RADARR – Films
@@ -111,6 +126,11 @@ services:
     ports:
       - "7878:7878"
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.radarr-lan.rule=Host(`radarr.lan`)
+      - traefik.http.routers.radarr-lan.entrypoints=web
+      - traefik.http.services.radarr-lan.loadbalancer.server.port=7878
 
   # ─────────────────────────────────────────
   #  LIDARR – Musique
@@ -131,6 +151,11 @@ services:
     ports:
       - "8686:8686"
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.lidarr-lan.rule=Host(`lidarr.lan`)
+      - traefik.http.routers.lidarr-lan.entrypoints=web
+      - traefik.http.services.lidarr-lan.loadbalancer.server.port=8686
 
   # ─────────────────────────────────────────
   #  BAZARR – Sous-titres
@@ -151,6 +176,11 @@ services:
     ports:
       - "6767:6767"
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.bazarr-lan.rule=Host(`bazarr.lan`)
+      - traefik.http.routers.bazarr-lan.entrypoints=web
+      - traefik.http.services.bazarr-lan.loadbalancer.server.port=6767
 
   # ─────────────────────────────────────────
   #  PLEX – Streaming
@@ -196,6 +226,8 @@ services:
       - traefik.http.routers.jellyfin.rule=Host(`jellyfin.${DOMAIN}`)
       - traefik.http.routers.jellyfin.entrypoints=websecure
       - traefik.http.routers.jellyfin.tls.certresolver=letsencrypt
+      - traefik.http.routers.jellyfin-lan.rule=Host(`jellyfin.lan`)
+      - traefik.http.routers.jellyfin-lan.entrypoints=web
       - traefik.http.services.jellyfin.loadbalancer.server.port=8096
 
   # ─────────────────────────────────────────
@@ -220,6 +252,8 @@ services:
       - traefik.http.routers.overseerr.rule=Host(`seerr.${DOMAIN}`)
       - traefik.http.routers.overseerr.entrypoints=websecure
       - traefik.http.routers.overseerr.tls.certresolver=letsencrypt
+      - traefik.http.routers.overseerr-lan.rule=Host(`seerr.lan`)
+      - traefik.http.routers.overseerr-lan.entrypoints=web
       - traefik.http.services.overseerr.loadbalancer.server.port=5055
 
   # ─────────────────────────────────────────
@@ -239,6 +273,11 @@ services:
     ports:
       - "8181:8181"
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.tautulli-lan.rule=Host(`tautulli.lan`)
+      - traefik.http.routers.tautulli-lan.entrypoints=web
+      - traefik.http.services.tautulli-lan.loadbalancer.server.port=8181
 
   # ─────────────────────────────────────────
   #  JELLYSTAT – Stats Jellyfin
@@ -274,6 +313,11 @@ services:
     ports:
       - "3001:3000"
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.jellystat-lan.rule=Host(`jellystat.lan`)
+      - traefik.http.routers.jellystat-lan.entrypoints=web
+      - traefik.http.services.jellystat-lan.loadbalancer.server.port=3000
 
 networks:
   proxy:
