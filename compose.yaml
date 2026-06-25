@@ -16,7 +16,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.homepage-lan.rule=Host(`homepage.lan`)
-      - traefik.http.routers.homepage-lan.entrypoints=web
+      - traefik.http.routers.homepage-lan.entrypoints=websecure
+      - traefik.http.routers.homepage-lan.tls=true
       - traefik.http.services.homepage-lan.loadbalancer.server.port=3000
 
   # ─────────────────────────────────────────
@@ -79,7 +80,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.prowlarr-lan.rule=Host(`prowlarr.lan`)
-      - traefik.http.routers.prowlarr-lan.entrypoints=web
+      - traefik.http.routers.prowlarr-lan.entrypoints=websecure
+      - traefik.http.routers.prowlarr-lan.tls=true
       - traefik.http.services.prowlarr-lan.loadbalancer.server.port=9696
 
   # ─────────────────────────────────────────
@@ -104,7 +106,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.sonarr-lan.rule=Host(`sonarr.lan`)
-      - traefik.http.routers.sonarr-lan.entrypoints=web
+      - traefik.http.routers.sonarr-lan.entrypoints=websecure
+      - traefik.http.routers.sonarr-lan.tls=true
       - traefik.http.services.sonarr-lan.loadbalancer.server.port=8989
 
   # ─────────────────────────────────────────
@@ -129,7 +132,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.radarr-lan.rule=Host(`radarr.lan`)
-      - traefik.http.routers.radarr-lan.entrypoints=web
+      - traefik.http.routers.radarr-lan.entrypoints=websecure
+      - traefik.http.routers.radarr-lan.tls=true
       - traefik.http.services.radarr-lan.loadbalancer.server.port=7878
 
   # ─────────────────────────────────────────
@@ -154,7 +158,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.lidarr-lan.rule=Host(`lidarr.lan`)
-      - traefik.http.routers.lidarr-lan.entrypoints=web
+      - traefik.http.routers.lidarr-lan.entrypoints=websecure
+      - traefik.http.routers.lidarr-lan.tls=true
       - traefik.http.services.lidarr-lan.loadbalancer.server.port=8686
 
   # ─────────────────────────────────────────
@@ -179,7 +184,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.bazarr-lan.rule=Host(`bazarr.lan`)
-      - traefik.http.routers.bazarr-lan.entrypoints=web
+      - traefik.http.routers.bazarr-lan.entrypoints=websecure
+      - traefik.http.routers.bazarr-lan.tls=true
       - traefik.http.services.bazarr-lan.loadbalancer.server.port=6767
 
   # ─────────────────────────────────────────
@@ -227,7 +233,8 @@ services:
       - traefik.http.routers.jellyfin.entrypoints=websecure
       - traefik.http.routers.jellyfin.tls.certresolver=letsencrypt
       - traefik.http.routers.jellyfin-lan.rule=Host(`jellyfin.lan`)
-      - traefik.http.routers.jellyfin-lan.entrypoints=web
+      - traefik.http.routers.jellyfin-lan.entrypoints=websecure
+      - traefik.http.routers.jellyfin-lan.tls=true
       - traefik.http.services.jellyfin.loadbalancer.server.port=8096
 
   # ─────────────────────────────────────────
@@ -253,7 +260,8 @@ services:
       - traefik.http.routers.overseerr.entrypoints=websecure
       - traefik.http.routers.overseerr.tls.certresolver=letsencrypt
       - traefik.http.routers.overseerr-lan.rule=Host(`seerr.lan`)
-      - traefik.http.routers.overseerr-lan.entrypoints=web
+      - traefik.http.routers.overseerr-lan.entrypoints=websecure
+      - traefik.http.routers.overseerr-lan.tls=true
       - traefik.http.services.overseerr.loadbalancer.server.port=5055
 
   # ─────────────────────────────────────────
@@ -276,7 +284,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.tautulli-lan.rule=Host(`tautulli.lan`)
-      - traefik.http.routers.tautulli-lan.entrypoints=web
+      - traefik.http.routers.tautulli-lan.entrypoints=websecure
+      - traefik.http.routers.tautulli-lan.tls=true
       - traefik.http.services.tautulli-lan.loadbalancer.server.port=8181
 
   # ─────────────────────────────────────────
@@ -316,7 +325,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.jellystat-lan.rule=Host(`jellystat.lan`)
-      - traefik.http.routers.jellystat-lan.entrypoints=web
+      - traefik.http.routers.jellystat-lan.entrypoints=websecure
+      - traefik.http.routers.jellystat-lan.tls=true
       - traefik.http.services.jellystat-lan.loadbalancer.server.port=3000
 
 networks:
